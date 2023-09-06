@@ -1,15 +1,17 @@
 import java.util.Scanner;
-import java.util.concurrent.CyclicBarrier;
 
 public class Main {
+
+    static int totalProductos;
+
     public static void main(String[] args) {
-        // Leer los parámetros de la simulación
+        // Leer los parï¿½metros de la simulaciï¿½n
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Ingrese el número de productores: ");
+        System.out.print("Ingrese el nï¿½mero de productores: ");
         int nProductores = scanner.nextInt();
 
-        System.out.print("Ingrese el número de repartidores: ");
+        System.out.print("Ingrese el nï¿½mero de repartidores: ");
         int mRepartidores = scanner.nextInt();
 
         System.out.print("Ingrese la capacidad de la bodega: ");
@@ -21,15 +23,15 @@ public class Main {
         Planta planta = new Planta(capacidadBodega);
 
         for (int i = 0; i < nProductores; i++) {
-            new Productor(i, planta, totalProductos / nProductores).start();
+            new Productor(i, planta).start();
         }
+
+        Despachador despachador = new Despachador(planta);
+        despachador.start();
 
         for (int i = 0; i < mRepartidores; i++) {
-            new Repartidor(i, planta).start();
+            new Repartidor(i, planta, despachador).start();
         }
-
-        Despachador despachador = new Despachador(planta, totalProductos);
-        despachador.start();
 
         try {
             despachador.join();
@@ -37,6 +39,6 @@ public class Main {
             e.printStackTrace();
         }
 
-        System.out.println("La simulación ha finalizado correctamente.");
+        System.out.println("La simulaciï¿½n ha finalizado correctamente.");
     }
 }

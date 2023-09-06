@@ -1,25 +1,23 @@
 import java.util.concurrent.CyclicBarrier;
-class Despachador extends Thread {
-    private Planta planta;
-    private int totalProductos;
 
-    public Despachador(Planta planta, int totalProductos) {
+class Despachador extends Thread {
+
+    private Planta planta;
+
+    public Despachador(Planta planta) {
         this.planta = planta;
-        this.totalProductos = totalProductos;
     }
 
     @Override
     public void run() {
-        while (totalProductos > 0) {
+        while (Productor.todoListo) {
             try {
-                Thread.sleep(100); // Simulate other task
                 synchronized (planta.getBodega()) {
-                    if (planta.getBodega().isBodegaVacia()) {
-                        planta.getBodega().wait();
-                    } else {
+                    if (!planta.getBodega().isBodegaVacia()) {
                         Producto producto = planta.getBodega().tomarProducto();
-                        totalProductos--;
-                        System.out.println("Despachador toma producto " + producto.getId() + " de la bodega.");
+                        System.out.println("Despachador toma producto " + producto.getId());
+                    } else {
+                        Thread.sleep(1000);
                     }
                 }
             } catch (InterruptedException e) {

@@ -11,7 +11,8 @@ class Bodega {
             wait();
         }
         productosEnBodega++;
-        System.out.println("Productor deposita producto " + producto.getId() + " en la bodega. Productos en bodega: " + productosEnBodega);
+        System.out.println("Productor deposita producto " + producto.getId() + " en la bodega. Productos en bodega: "
+                + productosEnBodega);
         notifyAll();
     }
 

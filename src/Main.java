@@ -22,13 +22,18 @@ public class Main {
 
         Planta planta = new Planta(capacidadBodega);
 
+        // Se crea un thread productor por cada productor que se haya ingresado en
+        // consola
         for (int i = 0; i < nProductores; i++) {
             new Productor(i, planta).start();
         }
 
+        // Solo se crea un despachador
         Despachador despachador = new Despachador(planta);
         despachador.start();
 
+        // Se crea un thread repartidor por cada repartidor que se haya ingresado en
+        // consola
         for (int i = 0; i < mRepartidores; i++) {
             new Repartidor(i, planta, despachador).start();
         }

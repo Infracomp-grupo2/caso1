@@ -1,13 +1,14 @@
 import java.util.Random;
-import java.util.concurrent.CyclicBarrier;
 
 class Repartidor extends Thread {
     private int id;
     private Planta planta;
+    private Despachador despachador;
 
     public Repartidor(int id, Planta planta, Despachador despachador) {
         this.id = id;
         this.planta = planta;
+        this.despachador = despachador;
     }
 
     @Override

@@ -3,6 +3,9 @@ import java.util.Random;
 class Productor extends Thread {
     private int id;
     private Planta planta;
+
+    // Esta variable es para saber si los productores ya terminaron de producir, si
+    // está en true significa que aún quedan productos por producir
     static Boolean todoListo = true;
 
     public Productor(int id, Planta planta) {
@@ -23,6 +26,8 @@ class Productor extends Thread {
                     Main.totalProductos--;
                 }
 
+                // Después de mandar su producto a la bodega, el productor se duerme hasta que
+                // su producto sea entregado
                 synchronized (producto) {
                     wait();
                 }

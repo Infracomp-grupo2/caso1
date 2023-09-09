@@ -35,7 +35,7 @@ public class Main {
         // Se crea un thread repartidor por cada repartidor que se haya ingresado en
         // consola
         for (int i = 0; i < mRepartidores; i++) {
-            new Repartidor(i, planta, despachador).start();
+            new Repartidor(i, despachador).start();
         }
 
         try {

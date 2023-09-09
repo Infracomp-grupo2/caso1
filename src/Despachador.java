@@ -4,10 +4,22 @@ class Despachador extends Thread {
 
     private Planta planta;
 
+    private Producto producto = null;
+
     // Al despachador le entra la plata por parámetro que es donde se va a conectar
     // con la bodega
     public Despachador(Planta planta) {
         this.planta = planta;
+    }
+
+    public synchronized Producto entregarProducto() throws InterruptedException {
+
+        while (producto == null) {
+            wait();
+        }
+
+        notifyAll();
+        return producto;
     }
 
     @Override
@@ -20,7 +32,7 @@ class Despachador extends Thread {
                 synchronized (planta.getBodega()) {
                     // Si la bodega tiene productos, el despachador puede tomar un producto
                     if (!planta.getBodega().isBodegaVacia()) {
-                        Producto producto = planta.getBodega().tomarProducto();
+                        producto = planta.getBodega().tomarProducto();
                         System.out.println("Despachador toma producto " + producto.getId());
                     }
                     // Si la bodega esta vacia, el despachador hace espera activa

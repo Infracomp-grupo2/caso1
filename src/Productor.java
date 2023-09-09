@@ -22,6 +22,7 @@ class Productor extends Thread {
                 Thread.sleep(random.nextInt(1000));
                 Producto producto = new Producto(Main.totalProductos);
                 synchronized (planta.getBodega()) {
+                    System.out.println("Productor " + id + " produce producto " + producto.getId());
                     planta.getBodega().almacenarProducto(producto);
                     Main.totalProductos--;
                 }

@@ -18,6 +18,7 @@ class Repartidor extends Thread {
                 Producto producto = despachador.entregarProducto();
                 System.out.println("Repartidor " + id + " toma producto " + producto.getId());
                 Thread.sleep((random.nextInt(8) + 3) * 1000);
+                notifyAll();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

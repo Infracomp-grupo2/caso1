@@ -13,12 +13,14 @@ class Repartidor extends Thread {
     public void run() {
         Random random = new Random();
 
-        while (true) {
+        while (Despachador.todoListo) {
             try {
-                Producto producto = despachador.entregarProducto();
+                Producto producto = despachador.llevarseProducto();
                 System.out.println("Repartidor " + id + " toma producto " + producto.getId());
                 Thread.sleep((random.nextInt(8) + 3) * 1000);
-                notifyAll();
+                synchronized (producto) {
+                    producto.notify();
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

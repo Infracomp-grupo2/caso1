@@ -18,14 +18,14 @@ public class Main {
         int capacidadBodega = scanner.nextInt();
 
         System.out.print("Ingrese el total de productos: ");
-        int totalProductos = scanner.nextInt();
+        totalProductos = scanner.nextInt();
 
         Planta planta = new Planta(capacidadBodega);
 
         // Se crea un thread productor por cada productor que se haya ingresado en
         // consola
         for (int i = 0; i < nProductores; i++) {
-            new Productor(i, planta).start();
+            new Productor(i + 1, planta).start();
         }
 
         // Solo se crea un despachador
@@ -44,6 +44,6 @@ public class Main {
             e.printStackTrace();
         }
 
-        System.out.println("La simulaci�n ha finalizado correctamente.");
+        System.out.println("La simulacion ha finalizado correctamente.");
     }
 }
